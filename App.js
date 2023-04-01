@@ -1,6 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView} from "react-native";
+
+import Box from "./components/Box";
+
 
 import { ThemeProvider } from "styled-components";
 
@@ -11,12 +14,14 @@ import TabBar from "./components/TabBar";
 
 import theme from "./utils/theme"
 
+
 const Tab = createBottomTabNavigator();
+
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <Box flex={1} as={SafeAreaView}>
         <NavigationContainer>
           <Tab.Navigator
             tabBar={(props) => <TabBar {...props} />}
@@ -28,9 +33,8 @@ export default function App() {
             <Tab.Screen name="Fav" component={FavView} />
           </Tab.Navigator>
         </NavigationContainer>
-      </SafeAreaView>
+      </Box>
     </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({});
