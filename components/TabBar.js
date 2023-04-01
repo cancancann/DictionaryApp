@@ -35,9 +35,8 @@ function TabBar({ state, descriptors, navigation }) {
         };
 
         return label === "Home" ? (
-          <Box p={15} bg="white" borderRadius="full" mt={-15}>
+          <Box key={label} p={15} bg="white" borderRadius="full" mt={-15}>
             <Button
-              key={label}
               borderRadius="full"
               size={56}
               bg="red"
@@ -56,10 +55,10 @@ function TabBar({ state, descriptors, navigation }) {
             onPress={onPress}
           >
             {label === "History" && (
-              <ClockIcon stroke={theme.colors.iconColor} />
+              <ClockIcon stroke={theme.colors.textLight} />
             )}
             {label === "Fav" && (
-              <BookmarkIcon stroke={theme.colors.iconColor} />
+              <BookmarkIcon stroke={theme.colors.textLight} />
             )}
             <Box size={3} bg={isFocused ? "red" : "white"} mt={6} />
           </Button>
