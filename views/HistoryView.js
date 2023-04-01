@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import BoxCenter from "../components/BoxCenter";
 
 const HistoryView = () => {
   return (
-    <View>
+    <BoxCenter>
       <Text>HistoryView</Text>
-    </View>
+    </BoxCenter>
   );
 };
 
