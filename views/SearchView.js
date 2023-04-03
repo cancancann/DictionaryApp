@@ -8,13 +8,12 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
-
 import TdkLogo from "../icons/tdk_logo-white.svg";
 import Search from "../components/Search";
 import Box from "../components/Box";
 import bg from "../assets/background.jpg";
 
-//useNastiveDraiver warning hatasını çözmeye çalış 
+//useNastiveDraiver warning hatasını çözmeye çalış
 
 const SearchView = () => {
   const [isSearchFocus, setSearchFocus] = useState(false);
@@ -24,13 +23,13 @@ const SearchView = () => {
   useEffect(() => {
     if (isSearchFocus) {
       Animated.timing(heroHeight, {
-        toValue: 1,
-        duration: 500,
+        toValue: 52 + 32,
+        duration: 250,
       }).start();
     } else {
       Animated.timing(heroHeight, {
         toValue: 285,
-        duration: 500,
+        duration: 250,
       }).start();
     }
   }, [heroHeight, isSearchFocus]);
@@ -38,12 +37,12 @@ const SearchView = () => {
   //StatusBArConfig
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBarStyle("light-content");
-    }, [])
+      StatusBar.setBarStyle(isSearchFocus ? "dark-content" : "light-content");
+    }, [isSearchFocus])
   );
 
   return (
-    <Box as={SafeAreaView} bg="red" flex={1}>
+    <Box as={SafeAreaView} bg={isSearchFocus ? "softRed" : "red"} flex={1}>
       {/* Header */}
       <Box
         as={Animated.View}
@@ -52,27 +51,41 @@ const SearchView = () => {
         height={heroHeight}
       >
         {/* background */}
+        {!isSearchFocus && (
+          <Box
+            as={ImageBackground}
+            source={bg}
+            style={{ width: "100%", height: "100%" }}
+          >
+            {/* Logo */}
+            <Box flex={1} alignItems="center" justifyContent="center">
+              <TdkLogo width={120} color="white" />
+            </Box>
+          </Box>
+        )}
+        {/* Search */}
         <Box
-          as={ImageBackground}
-          source={bg}
-          style={{ width: "100%", height: "100%" }}
+          position="absolute"
+          bottom={isSearchFocus ? 0 : -42}
+          left={0}
+          width="100%"
+          p={16}
         >
-          {/* Logo */}
-          <Box flex={1} alignItems="center" justifyContent="center">
-            <TdkLogo width={120} color="white" />
-          </Box>
-          {/* Search */}
-          <Box p={16} mb={-42}>
-            <Search onChangeFocus={(status) => setSearchFocus(status)} />
-          </Box>
+          <Search onChangeFocus={(status) => setSearchFocus(status)} />
         </Box>
       </Box>
 
       {/* content */}
-      <Box flex={1} bg="white" pt={26}>
-        <Box p={30} flex={1}>
-          <Text>Hello</Text>
-        </Box>
+      <Box flex={1} bg="white" pt={isSearchFocus ? 0 : 26}>
+        {isSearchFocus ? (
+          <Box p={30} flex={1}>
+            <Text>History</Text>
+          </Box>
+        ) : (
+          <Box p={30} flex={1}>
+            <Text>Öneri</Text>
+          </Box>
+        )}
       </Box>
     </Box>
   );
