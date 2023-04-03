@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import Box from "./Box";
 import Input from "./Input";
@@ -6,10 +6,13 @@ import SearchIcon from "../icons/search.svg";
 import theme from "../utils/theme";
 import Text from "./Text";
 import Button from "./Button";
-import Close from "../icons/close.svg";
 
-const Search = () => {
+const Search = ({ onChangeFocus }) => {
   const [isFocus, setFocus] = useState(false);
+
+  useEffect(() => {
+    onChangeFocus(isFocus);
+  }, [isFocus,onChangeFocus]);
 
   const onClose = () => {
     setFocus(false);
@@ -39,10 +42,8 @@ const Search = () => {
           borderRadius="normal"
           pl={52}
           onFocus={() => setFocus(true)}
+          clearButtonMode="always"
         />
-        <Box position="absolute" right={16} top={14}>
-          <Close />
-        </Box>
         <Box position="absolute" left={16} top={14}>
           <SearchIcon stroke={theme.colors.textMedium} />
         </Box>

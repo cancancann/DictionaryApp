@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import Button from "./Button";
 
 import SearchIcon from "../icons/search.svg";
@@ -9,7 +8,15 @@ import theme from "../utils/theme";
 
 function TabBar({ state, descriptors, navigation }) {
   return (
-    <View style={{ flexDirection: "row" }}>
+    <Box
+      bg="white"
+      flexDirection="row"
+      style={{
+        shadowColor: "#000",
+        shadowOpacity: 0.13,
+        shadowRadius: 24,
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
 
@@ -35,17 +42,14 @@ function TabBar({ state, descriptors, navigation }) {
         };
 
         return label === "Home" ? (
+          //SearchButton
           <Box key={label} p={15} bg="white" borderRadius="full" mt={-15}>
-            <Button
-              borderRadius="full"
-              size={56}
-              bg="red"
-              onPress={onPress}
-            >
+            <Button borderRadius="full" size={56} bg="red" onPress={onPress}>
               <SearchIcon width={24} height={24} stroke="white" />
             </Button>
           </Box>
         ) : (
+          //tab-button
           <Button
             key={label}
             pt={6}
@@ -55,16 +59,26 @@ function TabBar({ state, descriptors, navigation }) {
             onPress={onPress}
           >
             {label === "History" && (
-              <ClockIcon stroke={theme.colors.textLight} />
+              <ClockIcon
+                stroke={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
             )}
             {label === "Fav" && (
-              <BookmarkIcon stroke={theme.colors.textLight} />
+              <BookmarkIcon
+                stroke={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
             )}
-            <Box size={3} bg={isFocused ? "red" : "white"} mt={6} />
+            {/* indicatör */}
+            <Box
+              size={4}
+              bg={isFocused ? "red" : "white"}
+              mt={6}
+              borderRadius="full"
+            />
           </Button>
         );
       })}
-    </View>
+    </Box>
   );
 }
 

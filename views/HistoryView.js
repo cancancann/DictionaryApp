@@ -1,12 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import BoxCenter from "../components/BoxCenter";
+import { StatusBar, StyleSheet, Text } from "react-native";
+import React, { useCallback } from "react";
+import { SafeAreaView } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import Box from "../components/Box";
 
 const HistoryView = () => {
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle("dark-content");
+    }, [])
+  );
   return (
-    <BoxCenter>
+    <Box as={SafeAreaView} flex={1} alignItems="center" justifyContent="center" >
       <Text>HistoryView</Text>
-    </BoxCenter>
+    </Box>
   );
 };
 
