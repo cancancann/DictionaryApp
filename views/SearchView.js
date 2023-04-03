@@ -25,12 +25,12 @@ const SearchView = () => {
     if (isSearchFocus) {
       Animated.timing(heroHeight, {
         toValue: 1,
-        duration: 5000,
+        duration: 500,
       }).start();
     } else {
       Animated.timing(heroHeight, {
         toValue: 285,
-        duration: 5000,
+        duration: 500,
       }).start();
     }
   }, [heroHeight, isSearchFocus]);
