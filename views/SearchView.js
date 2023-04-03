@@ -13,7 +13,6 @@ import Search from "../components/Search";
 import Box from "../components/Box";
 import bg from "../assets/background.jpg";
 
-//useNastiveDraiver warning hatasını çözmeye çalış
 
 const SearchView = () => {
   const [isSearchFocus, setSearchFocus] = useState(false);
