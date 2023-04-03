@@ -25,11 +25,13 @@ const SearchView = () => {
       Animated.timing(heroHeight, {
         toValue: 52 + 32,
         duration: 250,
+        useNativeDriver:false
       }).start();
     } else {
       Animated.timing(heroHeight, {
         toValue: 285,
         duration: 250,
+        useNativeDriver:false //Expo cli kullanıldığı için false normalde native cli kullansan true
       }).start();
     }
   }, [heroHeight, isSearchFocus]);
