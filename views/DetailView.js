@@ -1,27 +1,22 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
+import { SafeAreaView, StatusBar } from "react-native";
 
-//svg import
-import BookmarkIcon from "../icons/bookmark.svg";
-import BoxCenter from "../components/BoxCenter";
+import Box from "../components/Box";
+import Text from "../components/Text";
+import { useFocusEffect } from "@react-navigation/native";
 
 const DetailView = () => {
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle("dark-content");
+    }, [])
+  );
+
   return (
-    <BoxCenter>
-      <Text>DetailView</Text>
-      <View>
-        <BookmarkIcon
-          width={50}
-          height={50}
-          fill="none"
-          stroke="black"
-          strokeOpacity="0.7"
-        />
-      </View>
-    </BoxCenter>
+    <Box as={SafeAreaView} flex={1} alignItems="center" justifyContent="center">
+      <Text>Detay</Text>
+    </Box>
   );
 };
 
 export default DetailView;
-
-const styles = StyleSheet.create({});
