@@ -13,7 +13,7 @@ const DetailView = () => {
   );
 
   return (
-    <Box as={SafeAreaView} flex={1} alignItems="center" justifyContent="center">
+    <Box flex={1} bg="softRed" p={16}>
       <Text>Detay</Text>
     </Box>
   );

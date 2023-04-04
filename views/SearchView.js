@@ -4,7 +4,6 @@ import {
   ImageBackground,
   SafeAreaView,
   StatusBar,
-  Text,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
@@ -14,28 +13,27 @@ import Search from "../components/Search";
 import Box from "../components/Box";
 import bg from "../assets/background.jpg";
 import { CardContainer, CardSummary, CardTitle } from "../components/Card";
+import { SimpleCardContainer, SimpleCardTitle } from "../components/SimpleCard";
+import Text from "../components/Text";
 
 const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "First Item 1",
-    summary: "First Item 1 ",
   },
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
     title: "Second Item 2 ",
-    summary: "First Item 2 ",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d72",
     title: "Third Item 3 ",
-    summary: "First Item 3 ",
   },
 ];
 
 const SearchView = ({ navigation }) => {
   const [isSearchFocus, setSearchFocus] = useState(false);
-  const [heroHeight] = useState(new Animated.Value(285));
+  const [heroHeight] = useState(new Animated.Value(230));
 
   //AnimatedHeader
   useEffect(() => {
@@ -47,7 +45,7 @@ const SearchView = ({ navigation }) => {
       }).start();
     } else {
       Animated.timing(heroHeight, {
-        toValue: 285,
+        toValue: 230,
         duration: 250,
         useNativeDriver: false, //Expo cli kullanıldığı için false normalde native cli kullansan true
       }).start();
@@ -98,8 +96,24 @@ const SearchView = ({ navigation }) => {
       {/* content */}
       <Box flex={1} bg="softRed" pt={isSearchFocus ? 0 : 26}>
         {isSearchFocus ? (
-          <Box p={30} flex={1}>
-            <Text>History</Text>
+          <Box flex={1}>
+            <FlatList
+              style={{ padding: 16 }}
+              data={DATA}
+              renderItem={({ item }) => (
+                <Box py={6}>
+                  <SimpleCardContainer>
+                    <SimpleCardTitle>{item.title}</SimpleCardTitle>
+                  </SimpleCardContainer>
+                </Box>
+              )}
+              keyExtractor={(item) => item.id}
+              ListHeaderComponent={
+                <Text color="textLight" mb={10}>
+                  Son Aramalar
+                </Text>
+              }
+            />
           </Box>
         ) : (
           <Box p={20} flex={1}>
@@ -108,7 +122,9 @@ const SearchView = ({ navigation }) => {
 
               <CardContainer
                 mt={10}
-                onPress={() => navigation.navigate("Details")}
+                onPress={() =>
+                  navigation.navigate("Details", { title: "onpara" }) //parametre olarak options değiştirilir
+                }
               >
                 <CardTitle>on para</CardTitle>
                 <CardSummary>çok az (para).</CardSummary>
@@ -119,7 +135,11 @@ const SearchView = ({ navigation }) => {
 
               <CardContainer
                 mt={10}
-                onPress={() => navigation.navigate("Details")}
+                onPress={() =>
+                  navigation.navigate("Details", {
+                    title: "siyem siyem ağlamak",
+                  })
+                }
               >
                 <CardTitle>siyem siyem ağlamak</CardTitle>
                 <CardSummary>
@@ -127,19 +147,6 @@ const SearchView = ({ navigation }) => {
                 </CardSummary>
               </CardContainer>
             </Box>
-
-            {/* <FlatList
-              data={DATA}
-              renderItem={({ item }) => (
-                <Box py={5}>
-                  <CardContainer>
-                    <CardTitle>{item.title}</CardTitle>
-                    <CardSummary>{item.summary}</CardSummary>
-                  </CardContainer>
-                </Box>
-              )}
-              keyExtractor={(item) => item.id}
-            /> */}
           </Box>
         )}
       </Box>
