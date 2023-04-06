@@ -134,7 +134,10 @@ const SearchView = ({ navigation }) => {
               <CardContainer
                 mt={10}
                 onPress={
-                  () => navigation.navigate("Details", { title: "onpara" }) //parametre olarak options değiştirilir
+                  () =>
+                    navigation.navigate("Details", {
+                      keyword: homeData?.kelime[0].madde,
+                    }) //parametre olarak options değiştirilir
                 }
               >
                 <CardTitle>{homeData?.kelime[0].madde}</CardTitle>
@@ -148,7 +151,7 @@ const SearchView = ({ navigation }) => {
                 mt={10}
                 onPress={() =>
                   navigation.navigate("Details", {
-                    title: "siyem siyem ağlamak",
+                    keyword: homeData?.atasoz[0].madde,
                   })
                 }
               >

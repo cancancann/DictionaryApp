@@ -1,14 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { StatusBar, ScrollView } from "react-native";
 
 import Box from "../components/Box";
 import Text from "../components/Text";
-import {
-  DetailSummaryContainer,
-  DetailSummaryTitle,
-  DetailSummaryTitleSolid,
-} from "../components/DetailSummary";
+import DetailSummaryContainer from "../components/DetailSummary";
 import ActionButton, { ActionButtonTitle } from "../components/ActionButton";
 
 import HandIcon from "../icons/hand.svg";
@@ -20,7 +16,20 @@ import KaydetSolidIcon from "../icons/kaydet2.svg";
 
 import theme from "../utils/theme";
 
-const DetailView = () => {
+const DetailView = ({ route }) => {
+  const keyword = route.params?.keyword;
+  const [data, setData] = useState(null);
+
+  const getDetailData = async () => {
+    const response = await fetch(`https://sozluk.gov.tr/gts?ara=${keyword}`);
+    const data = await response.json();
+    setData(data[0]);
+  };
+
+  useEffect(() => {
+    getDetailData();
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle("dark-content");
@@ -32,10 +41,10 @@ const DetailView = () => {
       <Box as={ScrollView} p={16}>
         <Box>
           <Text fontSize={25} fontWeight="bold">
-            Detay
+            {keyword}
           </Text>
           <Text color="textLight" mt={8}>
-            Arapça Kalem
+            {data?.telaffuz && data?.telaffuz} {data?.lisan}
           </Text>
         </Box>
         <Box flexDirection="row" mt={24}>
@@ -53,25 +62,18 @@ const DetailView = () => {
           </ActionButton>
         </Box>
         <Box mt={32}>
-          <DetailSummaryContainer>
-            <DetailSummaryTitle>
-              Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç:
-            </DetailSummaryTitle>
-            <DetailSummaryTitleSolid>
-              "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı
-              Atay
-            </DetailSummaryTitleSolid>
-          </DetailSummaryContainer>
-
-          <DetailSummaryContainer border>
-            <DetailSummaryTitle>
-              Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç:
-            </DetailSummaryTitle>
-            <DetailSummaryTitleSolid>
-              "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı
-              Atay
-            </DetailSummaryTitleSolid>
-          </DetailSummaryContainer>
+          {data
+            ? data.anlamlarListe.map((item) => (
+                <DetailSummaryContainer
+                  border={item.anlam_sira !== "1"}
+                  data={data}
+                />
+              ))
+            : [1, 2, 3].map((index) => (
+                <>
+                  <DetailSummaryContainer border={index !== 1} />
+                </>
+              ))}
         </Box>
       </Box>
     </Box>

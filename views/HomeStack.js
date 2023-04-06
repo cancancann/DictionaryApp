@@ -30,7 +30,7 @@ const HomeStack = () => {
         component={DetailView}
         options={({ route, navigation }) => {
           return {
-            title: (route.params && route.params.title) || "Boş",
+            title: (route.params && route.params.title) || "",
             headerStyle: {
               backgroundColor: theme.colors.softRed,
               // shadowColor: "transparent", //Sadece İOS Os de kullanılıyor onun yerine şöyle:
