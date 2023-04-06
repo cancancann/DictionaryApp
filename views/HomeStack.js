@@ -21,7 +21,7 @@ const HomeStack = () => {
         component={SearchView}
         options={() => {
           return {
-            header: () => {},
+            headerShown: false,
           };
         }}
       />
@@ -35,7 +35,7 @@ const HomeStack = () => {
               backgroundColor: theme.colors.softRed,
               // shadowColor: "transparent", //Sadece İOS Os de kullanılıyor onun yerine şöyle:
               elevation: 0, // burada elevation'ı ayarlayabilirsiniz
-              shadowColor:"transparent" //hala hatalı çalışıyor.
+              shadowColor: "transparent", //hala hatalı çalışıyor.
             },
             headerLeft: () => (
               <Button

@@ -34,6 +34,17 @@ const DATA = [
 const SearchView = ({ navigation }) => {
   const [isSearchFocus, setSearchFocus] = useState(false);
   const [heroHeight] = useState(new Animated.Value(230));
+  const [homeData, setHomeData] = useState(null);
+
+  const getHomeData = async () => {
+    const response = await fetch("https://sozluk.gov.tr/icerik");
+    const data = await response.json();
+    setHomeData(data);
+  };
+
+  useEffect(() => {
+    getHomeData();
+  }, []);
 
   //AnimatedHeader
   useEffect(() => {
@@ -118,16 +129,16 @@ const SearchView = ({ navigation }) => {
         ) : (
           <Box p={20} flex={1}>
             <Box>
-              <Text color="textLight">Bir Deyim</Text>
+              <Text color="textLight">Bir Kelime</Text>
 
               <CardContainer
                 mt={10}
-                onPress={() =>
-                  navigation.navigate("Details", { title: "onpara" }) //parametre olarak options değiştirilir
+                onPress={
+                  () => navigation.navigate("Details", { title: "onpara" }) //parametre olarak options değiştirilir
                 }
               >
-                <CardTitle>on para</CardTitle>
-                <CardSummary>çok az (para).</CardSummary>
+                <CardTitle>{homeData?.kelime[0].madde}</CardTitle>
+                <CardSummary>{homeData?.kelime[0].anlam}</CardSummary>
               </CardContainer>
             </Box>
             <Box mt={25}>
@@ -141,10 +152,8 @@ const SearchView = ({ navigation }) => {
                   })
                 }
               >
-                <CardTitle>siyem siyem ağlamak</CardTitle>
-                <CardSummary>
-                  hafif hafif, ince ince, durmadan gözyaşı dökmek.
-                </CardSummary>
+                <CardTitle>{homeData?.atasoz[0].madde}</CardTitle>
+                <CardSummary>{homeData?.atasoz[0].anlam}</CardSummary>
               </CardContainer>
             </Box>
           </Box>
