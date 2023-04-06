@@ -33,7 +33,9 @@ const HomeStack = () => {
             title: (route.params && route.params.title) || "Boş",
             headerStyle: {
               backgroundColor: theme.colors.softRed,
-              // shadowColor: "transparent", //çalışmıyor sebebini anlamadım tekrar dönüp bakacağım
+              // shadowColor: "transparent", //Sadece İOS Os de kullanılıyor onun yerine şöyle:
+              elevation: 0, // burada elevation'ı ayarlayabilirsiniz
+              shadowColor:"transparent" //hala hatalı çalışıyor.
             },
             headerLeft: () => (
               <Button
